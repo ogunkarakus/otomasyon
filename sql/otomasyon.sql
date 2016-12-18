@@ -3,12 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 192.168.99.100:3306
--- Üretim Zamanı: 17 Ara 2016, 01:35:49
+-- Üretim Zamanı: 18 Ara 2016, 13:29:44
 -- Sunucu sürümü: 5.7.16
 -- PHP Sürümü: 5.6.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET time_zone = "+03:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -32,9 +32,11 @@ CREATE TABLE IF NOT EXISTS `kullanicilar` (
   `soyad` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `elektronik_posta_adresi` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `sifre` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `kayit_zamani` datetime NOT NULL,
+  `guncelleme_zamani` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `elektronik_posta_adresi` (`elektronik_posta_adresi`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `stoklar` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `adet` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -109,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `urunler` (
   `fiyat` decimal(10,2) NOT NULL,
   `indirim` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -135,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `urun_stok` (
   `urun_id` int(10) UNSIGNED NOT NULL,
   `stok_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

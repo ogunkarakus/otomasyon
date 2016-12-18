@@ -21,8 +21,7 @@ if (isset($_POST['e_p_a']) && isset($_POST['s_f_r'])) {
 
     if (false === giris_yapmayi_dene($e_p_a, $s_f_r)) {
         $_SESSION['mesajlar'][] = mesaj_hata(
-            'Elektronik posta adresi ya d'.
-            'a şifre ile eşleşen kayıt bulunamadı.',
+            'Girdiğiniz bilgiler ile eşleşen herhangi bir kayıt bulunamadı.',
             true
         );
 
@@ -43,6 +42,7 @@ sayfa:
 
 $stil = <<<STIL
 body { padding-bottom: 15px; padding-top: 15px; }
+h1 { margin-top: 0; }
 label, .input-group-addon { cursor: pointer; }
 .alert { margin-bottom: 15px; }
 .form-group { padding-left: 15px; padding-right: 15px; }
@@ -60,14 +60,23 @@ define('baslik', 'Giriş Yap');
 define('kod', $kod);
 define('stil', $stil);
 
+$e_p_a = isset($e_p_a) ? $e_p_a : '';
+
 require str_replace('\\', '/', __DIR__).'/ust.php';
 
 ?>
 <div class="container-fluid">
 <div class="row">
 <div class="col-lg-12">
+<h1 class="text-center">
+<a href="index.php" title="Ana Sayfa">
+<i class="fa fa-dashboard fa-fw"></i>
+</a>
+</h1>
+</div>
+<div class="col-lg-12">
 <?php mesajlar(); ?>
-<form class="panel panel-default form-horizontal" method="post">
+<form class="panel panel-primary form-horizontal" method="post">
 <div class="panel-heading">
 <h1 class="panel-title">
 <i class="fa fa-fw fa-sign-in"></i>
@@ -83,8 +92,9 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 <i class="fa fa-envelope-o fa-fw"></i>
 </span>
 <?php print '<input class="form-control" id="e-p-a" name="e_p_a" '.
-            'placeholder="Elektronik posta adresi" required type="email"/>'.
-            PHP_EOL; ?>
+            'placeholder="Elektronik posta adresi" required type="email"'.
+            'value="'.dolu_mu($e_p_a).
+            '"/>'.PHP_EOL; ?>
 </div>
 </div>
 <div class="form-group">
@@ -101,7 +111,7 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 </div>
 </div>
 <div class="panel-footer">
-<button class="btn btn-block btn-default" type="submit">
+<button class="btn btn-block btn-inverse" type="submit">
 <i class="fa fa-fw fa-sign-in"></i>
 </button>
 </div>

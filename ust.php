@@ -5,10 +5,13 @@
 <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
 <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
 <link href="<?php
-    icerik_saglayici('font-awesome/4.7.0/css/font-awesome.min.css');
+    icerik_saglayici('twitter-bootstrap/3.3.7/css/bootstrap.min.css');
 ?>" rel="stylesheet"/>
 <link href="<?php
-    icerik_saglayici('twitter-bootstrap/3.3.7/css/bootstrap.min.css');
+    icerik_saglayici('flat-ui/2.3.0/css/flat-ui.min.css');
+?>" rel="stylesheet"/>
+<link href="<?php
+    icerik_saglayici('font-awesome/4.7.0/css/font-awesome.min.css');
 ?>" rel="stylesheet"/>
 <link href="<?php yazi_tipi(
     'Roboto',
@@ -20,7 +23,7 @@
 <meta content="<?php meta_googlebot(); ?>" name="googlebot"/>
 <meta content="<?php meta_robots(); ?>" name="robots"/>
 <meta content="<?php meta_viewport(); ?>" name="viewport"/>
-<style><?php echo defined('stil') ? stil : ''; ?></style>
-<title><?php echo defined('baslik') ? baslik : ''; ?></title>
+<style><?php print defined('stil') ? stil : ''; ?></style>
+<title><?php print defined('baslik') ? baslik : ''; ?></title>
 </head>
 <body>

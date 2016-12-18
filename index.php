@@ -20,7 +20,7 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 require str_replace('\\', '/', __DIR__).'/nav.php';
 
 ?>
-1
+&hellip;
 <?php
 
 $kod = <<<KOD

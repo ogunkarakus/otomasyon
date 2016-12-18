@@ -1,4 +1,4 @@
-<div class="navbar navbar-default">
+<div class="navbar navbar-inverse">
 <div class="container-fluid">
 <div class="navbar-header">
 <?php print '<button aria-controls="navbar" aria-expanded="false"'.
@@ -16,21 +16,23 @@
 </div>
 <div class="collapse navbar-collapse" id="navbar">
 <ul class="nav navbar-nav">
-<?php $kullanicilar_mi = '/kullanicilar.php' === $_SERVER['PHP_SELF']; ?>
+<?php $kullanicilar_mi = mi('kullanici'); ?>
 <li<?php print $kullanicilar_mi ? ' class="active"' : ''; ?>>
 <a href="kullanicilar.php" title="Kullanıcılar">
 <i class="fa fa-fw fa-users"></i>
 <span>Kullanıcılar</span>
 </a>
 </li>
-<?php $siparisler_mi = '/siparisler.php' === $_SERVER['PHP_SELF']; ?>
+<!--
+<?php $siparisler_mi = mi('siparis'); ?>
 <li<?php print $siparisler_mi ? ' class="active"' : ''; ?>>
 <a href="siparisler.php" title="Siparişler">
-<i class="fa fa-shopping-cart fa-fw"></i>
+<i class="fa fa-fw fa-shopping-cart"></i>
 <span>Siparişler</span>
 </a>
 </li>
-<?php $urunler_mi = '/urunler.php' === $_SERVER['PHP_SELF']; ?>
+-->
+<?php $urunler_mi = mi('urun'); ?>
 <li<?php print $urunler_mi ? ' class="active"' : ''; ?>>
 <a href="urunler.php" title="Ürünler">
 <i class="fa fa-cubes fa-fw"></i>

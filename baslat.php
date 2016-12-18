@@ -31,6 +31,8 @@ try {
 
 karakter_seti_ayarla($ayar['vt_karakter_seti'], $ayar['vt_karakter_kumesi']);
 
+saati_ayarla();
+
 if (false === isset($_SESSION['mesajlar'])) {
     $_SESSION['mesajlar'] = [];
 }

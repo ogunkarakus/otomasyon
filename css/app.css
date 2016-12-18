@@ -115,6 +115,15 @@
     margin-bottom: 15px;
 }
 
+.panel-primary {
+    border-color: #34495e;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #34495e;
+    border-color: #34495e;
+}
+
 a:focus,
 a:hover {
     text-decoration: none;

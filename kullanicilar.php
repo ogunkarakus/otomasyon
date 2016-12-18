@@ -26,7 +26,7 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 require str_replace('\\', '/', __DIR__).'/nav.php';
 
 ?>
-<div class="panel panel-default">
+<div class="panel panel-primary">
 <div class="panel-heading">
 <h1 class="panel-title">
 <i class="fa fa-fw fa-users"></i>
@@ -38,27 +38,29 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <table class="table table-bordered">
 <thead>
 <tr>
-<th style="cursor: help;" title="Kayıt Numarası">#</th>
-<th>Ad</th>
-<th>Soyad</th>
-<th>Elektronik Posta Adresi</th>
-<th>İşlemler</th>
+<th class="small" style="cursor: help;" title="Kayıt Numarası">#</th>
+<th class="small">Ad</th>
+<th class="small">Soyad</th>
+<th class="small">Elektronik Posta Adresi</th>
+<th class="small">Kayıt Zamanı</th>
+<th class="small">Güncelleme Zamanı</th>
+<th class="small">İşlemler</th>
 </tr>
 </thead>
 <tbody>
 <?php if (empty($kullanicilar)): ?>
 <tr>
-<td colspan="5">
+<td class="small" colspan="5">
 <?php mesaj_uyari('Gösterilebilir kullanıcı verisi bulunamadı.'); ?>
 </td>
 </tr>
 <?php else: ?>
 <?php foreach ($kullanicilar as $kullanici): ?>
 <tr>
-<td><?php print $kullanici['id']; ?></td>
-<td><?php print $kullanici['ad']; ?></td>
-<td><?php print $kullanici['soyad']; ?></td>
-<td>
+<td class="small"><?php print $kullanici['id']; ?></td>
+<td class="small"><?php print $kullanici['ad']; ?></td>
+<td class="small"><?php print $kullanici['soyad']; ?></td>
+<td class="small">
 <a href="mailto:<?php
     print $kullanici['elektronik_posta_adresi'];
 ?>" target="_blank" title="<?php
@@ -67,7 +69,9 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <?php print $kullanici['elektronik_posta_adresi']; ?>
 </a>
 </td>
-<td>
+<td class="small"><?php print $kullanici['kayit_zamani']; ?></td>
+<td class="small"><?php print $kullanici['guncelleme_zamani']; ?></td>
+<td class="small">
 <a class="btn btn-warning btn-sm" href="kullanici_duzenle.php?id=<?php
     print $kullanici['id'];
 ?>" title="Düzenle">
@@ -89,7 +93,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 <div class="panel-footer">
-<?php print '<a class="btn btn-block btn-success" '.
+<?php print '<a class="btn btn-block btn-inverse" '.
             'href="kullanici_olustur.php" title="K'.
             'ullanıcı Oluştur">'.PHP_EOL; ?>
 <i class="fa fa-fw fa-user-plus"></i>
