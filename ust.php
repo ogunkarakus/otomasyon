@@ -5,7 +5,7 @@
 <link href="//fonts.gstatic.com" rel="dns-prefetch"/>
 <link href="//cdnjs.cloudflare.com" rel="dns-prefetch"/>
 <link href="<?php
-    icerik_saglayici('twitter-bootstrap/3.3.7/css/bootstrap.min.css');
+    icerik_saglayici('twitter-bootstrap/3.2.0/css/bootstrap.min.css');
 ?>" rel="stylesheet"/>
 <link href="<?php
     icerik_saglayici('flat-ui/2.3.0/css/flat-ui.min.css');

@@ -1,20 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
--- Anamakine: 192.168.99.100:3306
--- Üretim Zamanı: 18 Ara 2016, 13:29:44
--- Sunucu sürümü: 5.7.16
--- PHP Sürümü: 5.6.26
+-- Ana Makine: 192.168.99.100:3306
+-- Üretim Zamanı: 19 Ara 2016, 03:52:50
+-- Sunucu Sürümü: 5.7.16
+-- PHP Sürümü: 7.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+03:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Veritabanı: `otomasyon`
@@ -23,20 +17,65 @@ SET time_zone = "+03:00";
 -- --------------------------------------------------------
 
 --
+-- Tablo için tablo yapısı `faturalar`
+--
+
+DROP TABLE IF EXISTS `faturalar`;
+CREATE TABLE IF NOT EXISTS `faturalar` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `kayit_zamani` datetime NOT NULL,
+  `guncelleme_zamani` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `fatura_urun`
+--
+
+DROP TABLE IF EXISTS `fatura_urun`;
+CREATE TABLE IF NOT EXISTS `fatura_urun` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fatura_id` int(10) UNSIGNED NOT NULL,
+  `urun_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `kategoriler`
+--
+
+DROP TABLE IF EXISTS `kategoriler`;
+CREATE TABLE IF NOT EXISTS `kategoriler` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ust_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `ad` varchar(64) NOT NULL,
+  `aciklama` varchar(128) NOT NULL,
+  `kayit_zamani` datetime NOT NULL,
+  `guncelleme_zamani` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tablo için tablo yapısı `kullanicilar`
 --
 
+DROP TABLE IF EXISTS `kullanicilar`;
 CREATE TABLE IF NOT EXISTS `kullanicilar` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ad` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `soyad` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `elektronik_posta_adresi` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `sifre` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `ad` varchar(64) NOT NULL,
+  `soyad` varchar(64) NOT NULL,
+  `elektronik_posta_adresi` varchar(128) NOT NULL,
+  `sifre` varchar(128) NOT NULL,
   `kayit_zamani` datetime NOT NULL,
   `guncelleme_zamani` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `elektronik_posta_adresi` (`elektronik_posta_adresi`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -44,61 +83,15 @@ CREATE TABLE IF NOT EXISTS `kullanicilar` (
 -- Tablo için tablo yapısı `ozellikler`
 --
 
+DROP TABLE IF EXISTS `ozellikler`;
 CREATE TABLE IF NOT EXISTS `ozellikler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ad` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `deger` text COLLATE utf8mb4_unicode_520_ci,
+  `anahtar` varchar(128) NOT NULL,
+  `deger` text,
+  `kayit_zamani` datetime NOT NULL,
+  `guncelleme_zamani` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `siparisler`
---
-
-CREATE TABLE IF NOT EXISTS `siparisler` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `siparis_ozellik`
---
-
-CREATE TABLE IF NOT EXISTS `siparis_ozellik` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `siparis_id` int(10) UNSIGNED NOT NULL,
-  `ozellik_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `siparis_urun`
---
-
-CREATE TABLE IF NOT EXISTS `siparis_urun` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `siparis_id` int(10) UNSIGNED NOT NULL,
-  `urun_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `stoklar`
---
-
-CREATE TABLE IF NOT EXISTS `stoklar` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `adet` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -106,12 +99,31 @@ CREATE TABLE IF NOT EXISTS `stoklar` (
 -- Tablo için tablo yapısı `urunler`
 --
 
+DROP TABLE IF EXISTS `urunler`;
 CREATE TABLE IF NOT EXISTS `urunler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fiyat` decimal(10,2) NOT NULL,
+  `ad` varchar(192) NOT NULL,
+  `fiyat` decimal(19,4) NOT NULL,
   `indirim` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `adet` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `kayit_zamani` datetime NOT NULL,
+  `guncelleme_zamani` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `urun_kategori`
+--
+
+DROP TABLE IF EXISTS `urun_kategori`;
+CREATE TABLE IF NOT EXISTS `urun_kategori` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `urun_id` int(10) UNSIGNED NOT NULL,
+  `kategori_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -119,26 +131,10 @@ CREATE TABLE IF NOT EXISTS `urunler` (
 -- Tablo için tablo yapısı `urun_ozellik`
 --
 
+DROP TABLE IF EXISTS `urun_ozellik`;
 CREATE TABLE IF NOT EXISTS `urun_ozellik` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `urun_id` int(10) UNSIGNED NOT NULL,
   `ozellik_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `urun_stok`
---
-
-CREATE TABLE IF NOT EXISTS `urun_stok` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `urun_id` int(10) UNSIGNED NOT NULL,
-  `stok_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

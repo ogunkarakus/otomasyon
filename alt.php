@@ -2,10 +2,7 @@
 <p class="small text-center" style="margin: 0"><?php hak_sahipligi(); ?></p>
 </div>
 <script src="<?php
-    icerik_saglayici('jquery/3.1.1/jquery.min.js');
-?>"></script>
-<script src="<?php
-    icerik_saglayici('twitter-bootstrap/3.3.7/js/bootstrap.min.js');
+    icerik_saglayici('jquery/1.12.4/jquery.min.js');
 ?>"></script>
 <script src="<?php
     icerik_saglayici('flat-ui/2.3.0/js/flat-ui.min.js');

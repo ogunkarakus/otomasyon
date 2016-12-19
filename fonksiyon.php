@@ -4,6 +4,17 @@ function dolu_mu($girdi) {
     return false === empty($girdi) ? $girdi : '';
 }
 
+function faturalar() {
+    return vt(function ($vt) {
+        $stmt = $vt->prepare(
+            'select `id`, `kayit_zamani`, `guncelleme_zam'.
+            'ani` from `faturalar`'
+        );
+
+        return sonuclar($stmt);
+    });
+}
+
 function giris_yapilmis_mi() {
     return isset($_SESSION['oturum']) && $_SESSION['oturum'];
 }
@@ -65,6 +76,104 @@ function icerik_saglayici($dosya_yolu) {
     );
 }
 
+function istatistik_fatura() {
+    return vt(function ($vt) {
+        $sonuclar = [];
+
+        $stmt = $vt->prepare(
+            'select count(`id`) as `adet` from `faturalar`'
+        );
+
+        $sonuc = sonuclar($stmt, true);
+
+        $sonuclar['adet'] = $sonuc['adet'];
+
+        return $sonuclar;
+    });
+}
+
+function istatistik_genel() {
+    return vt(function ($vt) {
+        $sonuclar = [];
+
+        // Bu ay kazanılan miktar
+        $sonuclar['b_a_k_m'] = para(0);
+        // Bu yıl kazanılan miktar
+        $sonuclar['b_y_k_m'] = para(0);
+        // Tüm zamanlar boyunca kazanılan miktar
+        $sonuclar['t_z_b_k_m'] = para(0);
+
+        return $sonuclar;
+    });
+}
+
+function istatistik_kategori() {
+    return vt(function ($vt) {
+        $sonuclar = [];
+
+        $stmt = $vt->prepare(
+            'select count(`id`) as `adet` from `kategoriler`'
+        );
+
+        $sonuc = sonuclar($stmt, true);
+
+        $sonuclar['adet'] = $sonuc['adet'];
+
+        $stmt = $vt->prepare(
+            'select count(`id`) as `alt_adet` from '.
+            '`kategoriler` where `ust_id` <> 0'
+        );
+
+        $sonuc = sonuclar($stmt, true);
+
+        $sonuclar['alt_adet'] = $sonuc['alt_adet'];
+
+        return $sonuclar;
+    });
+}
+
+function istatistik_kullanici() {
+    return vt(function ($vt) {
+        $sonuclar = [];
+
+        $stmt = $vt->prepare(
+            'select count(`id`) as `adet` from `kullanicilar`'
+        );
+
+        $sonuc = sonuclar($stmt, true);
+
+        $sonuclar['adet'] = $sonuc['adet'];
+
+        return $sonuclar;
+    });
+}
+
+function istatistik_urun() {
+    return vt(function ($vt) {
+        $sonuclar = [];
+
+        $stmt = $vt->prepare(
+            'select count(`id`) as `adet` from `urunler`'
+        );
+
+        $sonuc = sonuclar($stmt, true);
+
+        $sonuclar['adet'] = $sonuc['adet'];
+
+        return $sonuclar;
+    });
+}
+
+function istatistikler() {
+    return [
+        'fatura' => istatistik_fatura(),
+        'genel' => istatistik_genel(),
+        'kategori' => istatistik_kategori(),
+        'kullanici' => istatistik_kullanici(),
+        'urun' => istatistik_urun(),
+    ];
+}
+
 function karakter_seti_ayarla($karakter_seti, $karakter_kumesi) {
     vt(function ($vt) use ($karakter_seti, $karakter_kumesi) {
         $vt->query('set names '.$karakter_seti.' collate '.$karakter_kumesi);
@@ -72,6 +181,17 @@ function karakter_seti_ayarla($karakter_seti, $karakter_kumesi) {
         $vt->query('set character_set_connection = '.$karakter_seti);
         $vt->query('set character_set_results = '.$karakter_seti);
         $vt->query('set collation_connection = '.$karakter_kumesi);
+    });
+}
+
+function kategoriler() {
+    return vt(function ($vt) {
+        $stmt = $vt->prepare(
+            'select `id`, `ad`, `aciklama`, `kayit_zamani`, `guncelleme_zam'.
+            'ani` from `kategoriler`'
+        );
+
+        return sonuclar($stmt);
     });
 }
 
@@ -419,9 +539,13 @@ function mi($adres) {
     return false !== strpos($_SERVER['PHP_SELF'], $adres);
 }
 
+function para($sayi) {
+    return number_format($sayi, 2, ',', '.');
+}
+
 function saati_ayarla() {
     return vt(function ($vt) {
-        $vt->query('set global time_zone = \'+03:00\'');
+        $vt->query('set @@session.time_zone = \'+03:00\'');
     });
 }
 
@@ -454,6 +578,17 @@ function sonuclar($stmt, $tek = false) {
         sonuc:
 
         return $sonuclar;
+    });
+}
+
+function urunler() {
+    return vt(function ($vt) {
+        $stmt = $vt->prepare(
+            'select `id`, `kayit_zamani`, `guncelleme_zam'.
+            'ani` from `urunler`'
+        );
+
+        return sonuclar($stmt);
     });
 }
 

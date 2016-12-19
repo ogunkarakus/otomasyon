@@ -111,8 +111,9 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 </div>
 </div>
 <div class="panel-footer">
-<button class="btn btn-block btn-inverse" type="submit">
+<button class="btn btn-block btn-success" type="submit">
 <i class="fa fa-fw fa-sign-in"></i>
+<span>Giriş Yap</span>
 </button>
 </div>
 </form>

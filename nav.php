@@ -16,6 +16,20 @@
 </div>
 <div class="collapse navbar-collapse" id="navbar">
 <ul class="nav navbar-nav">
+<?php $faturalar_mi = mi('fatura'); ?>
+<li<?php print $faturalar_mi ? ' class="active"' : ''; ?>>
+<a href="faturalar.php" title="Faturalar">
+<i class="fa fa-fw fa-files-o"></i>
+<span>Faturalar</span>
+</a>
+</li>
+<?php $kategoriler_mi = mi('kategori'); ?>
+<li<?php print $kategoriler_mi ? ' class="active"' : ''; ?>>
+<a href="kategoriler.php" title="Kategoriler">
+<i class="fa fa-fw fa-sitemap"></i>
+<span>Kategoriler</span>
+</a>
+</li>
 <?php $kullanicilar_mi = mi('kullanici'); ?>
 <li<?php print $kullanicilar_mi ? ' class="active"' : ''; ?>>
 <a href="kullanicilar.php" title="Kullanıcılar">
@@ -23,15 +37,6 @@
 <span>Kullanıcılar</span>
 </a>
 </li>
-<!--
-<?php $siparisler_mi = mi('siparis'); ?>
-<li<?php print $siparisler_mi ? ' class="active"' : ''; ?>>
-<a href="siparisler.php" title="Siparişler">
-<i class="fa fa-fw fa-shopping-cart"></i>
-<span>Siparişler</span>
-</a>
-</li>
--->
 <?php $urunler_mi = mi('urun'); ?>
 <li<?php print $urunler_mi ? ' class="active"' : ''; ?>>
 <a href="urunler.php" title="Ürünler">

@@ -110,6 +110,12 @@
          local( "Tahoma Bold" );
 }
 
+@media all and (min-width: 768px) and (max-width: 992px) {
+    .nav li a span {
+        display: none;
+    }
+}
+
 .alert,
 .navbar {
     margin-bottom: 15px;
