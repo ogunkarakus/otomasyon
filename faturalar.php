@@ -58,7 +58,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <td class="small"><?php print $fatura['kayit_zamani']; ?></td>
 <td class="small"><?php print $fatura['guncelleme_zamani']; ?></td>
 <td class="small">
-<a class="btn btn-success btn-sm" href="fatura.php?id=<?php
+<a class="btn btn-primary btn-sm" href="fatura.php?id=<?php
     print $fatura['id'];
 ?>" title="Görüntüle">
 <i class="fa fa-fw fa-eye"></i>
@@ -85,7 +85,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 <div class="panel-footer">
-<?php print '<a class="btn btn-block btn-success" '.
+<?php print '<a class="btn btn-block btn-primary" '.
             'href="fatura_olustur.php" title="F'.
             'atura Oluştur">'.PHP_EOL; ?>
 <i class="fa fa-fw fa-plus"></i>

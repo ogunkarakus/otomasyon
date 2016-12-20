@@ -78,17 +78,11 @@ function icerik_saglayici($dosya_yolu) {
 
 function istatistik_fatura() {
     return vt(function ($vt) {
-        $sonuclar = [];
-
         $stmt = $vt->prepare(
             'select count(`id`) as `adet` from `faturalar`'
         );
 
-        $sonuc = sonuclar($stmt, true);
-
-        $sonuclar['adet'] = $sonuc['adet'];
-
-        return $sonuclar;
+        return sonuclar($stmt, true);
     });
 }
 
@@ -107,60 +101,23 @@ function istatistik_genel() {
     });
 }
 
-function istatistik_kategori() {
-    return vt(function ($vt) {
-        $sonuclar = [];
-
-        $stmt = $vt->prepare(
-            'select count(`id`) as `adet` from `kategoriler`'
-        );
-
-        $sonuc = sonuclar($stmt, true);
-
-        $sonuclar['adet'] = $sonuc['adet'];
-
-        $stmt = $vt->prepare(
-            'select count(`id`) as `alt_adet` from '.
-            '`kategoriler` where `ust_id` <> 0'
-        );
-
-        $sonuc = sonuclar($stmt, true);
-
-        $sonuclar['alt_adet'] = $sonuc['alt_adet'];
-
-        return $sonuclar;
-    });
-}
-
 function istatistik_kullanici() {
     return vt(function ($vt) {
-        $sonuclar = [];
-
         $stmt = $vt->prepare(
             'select count(`id`) as `adet` from `kullanicilar`'
         );
 
-        $sonuc = sonuclar($stmt, true);
-
-        $sonuclar['adet'] = $sonuc['adet'];
-
-        return $sonuclar;
+        return sonuclar($stmt, true);
     });
 }
 
 function istatistik_urun() {
     return vt(function ($vt) {
-        $sonuclar = [];
-
         $stmt = $vt->prepare(
             'select count(`id`) as `adet` from `urunler`'
         );
 
-        $sonuc = sonuclar($stmt, true);
-
-        $sonuclar['adet'] = $sonuc['adet'];
-
-        return $sonuclar;
+        return sonuclar($stmt, true);
     });
 }
 
@@ -168,7 +125,6 @@ function istatistikler() {
     return [
         'fatura' => istatistik_fatura(),
         'genel' => istatistik_genel(),
-        'kategori' => istatistik_kategori(),
         'kullanici' => istatistik_kullanici(),
         'urun' => istatistik_urun(),
     ];
@@ -181,17 +137,6 @@ function karakter_seti_ayarla($karakter_seti, $karakter_kumesi) {
         $vt->query('set character_set_connection = '.$karakter_seti);
         $vt->query('set character_set_results = '.$karakter_seti);
         $vt->query('set collation_connection = '.$karakter_kumesi);
-    });
-}
-
-function kategoriler() {
-    return vt(function ($vt) {
-        $stmt = $vt->prepare(
-            'select `id`, `ad`, `aciklama`, `kayit_zamani`, `guncelleme_zam'.
-            'ani` from `kategoriler`'
-        );
-
-        return sonuclar($stmt);
     });
 }
 

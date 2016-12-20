@@ -93,7 +93,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 <div class="panel-footer">
-<?php print '<a class="btn btn-block btn-success" '.
+<?php print '<a class="btn btn-block btn-primary" '.
             'href="kullanici_olustur.php" title="K'.
             'ullanıcı Oluştur">'.PHP_EOL; ?>
 <i class="fa fa-fw fa-user-plus"></i>

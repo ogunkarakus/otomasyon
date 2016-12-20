@@ -89,28 +89,6 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <div class="panel panel-primary">
 <div class="panel-heading">
 <h1 class="panel-title">
-<i class="fa fa-fw fa-sitemap"></i>
-<span>Kategoriler</span>
-</h1>
-</div>
-<div class="panel-body">
-<p class="small">
-<strong>Toplam kategori adedi</strong>
-<span>:</span>
-<span><?php print $istatistikler['kategori']['adet']; ?></span>
-</p>
-<p class="small">
-<strong>Toplam alt kategori adedi</strong>
-<span>:</span>
-<span><?php print $istatistikler['kategori']['alt_adet']; ?></span>
-</p>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-4">
-<div class="panel panel-primary">
-<div class="panel-heading">
-<h1 class="panel-title">
 <i class="fa fa-fw fa-users"></i>
 <span>Kullanıcılar</span>
 </h1>
@@ -124,7 +102,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 </div>
-<div class="col-lg-12 col-md-12">
+<div class="col-lg-4 col-md-4">
 <div class="panel panel-primary">
 <div class="panel-heading">
 <h1 class="panel-title">

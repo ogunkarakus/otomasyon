@@ -60,7 +60,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
             '>Ad</label>' . PHP_EOL; ?>
 <div class="input-group">
 <span class="input-group-addon" data-focus-to="ad">
-<i class="fa fa-fw fa-user"></i>
+<i class="fa fa-fw fa-user-o"></i>
 </span>
 <?php print '<input class="form-control" id="ad" name="kullanici[ad]" '.
             'placeholder="Ad" required type="text" '.
@@ -107,7 +107,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 <div class="panel-footer">
-<button class="btn btn-block btn-success">
+<button class="btn btn-block btn-primary">
 <i class="fa fa-fw fa-save"></i>
 <span>Kaydet</span>
 </button>

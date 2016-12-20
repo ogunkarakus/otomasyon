@@ -23,13 +23,6 @@
 <span>Faturalar</span>
 </a>
 </li>
-<?php $kategoriler_mi = mi('kategori'); ?>
-<li<?php print $kategoriler_mi ? ' class="active"' : ''; ?>>
-<a href="kategoriler.php" title="Kategoriler">
-<i class="fa fa-fw fa-sitemap"></i>
-<span>Kategoriler</span>
-</a>
-</li>
 <?php $kullanicilar_mi = mi('kullanici'); ?>
 <li<?php print $kullanicilar_mi ? ' class="active"' : ''; ?>>
 <a href="kullanicilar.php" title="Kullanıcılar">

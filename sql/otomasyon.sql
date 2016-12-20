@@ -31,6 +31,20 @@ CREATE TABLE IF NOT EXISTS `faturalar` (
 -- --------------------------------------------------------
 
 --
+-- Tablo için tablo yapısı `fatura_ozellik`
+--
+
+DROP TABLE IF EXISTS `fatura_ozellik`;
+CREATE TABLE IF NOT EXISTS `fatura_ozellik` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fatura_id` int(10) UNSIGNED NOT NULL,
+  `ozellik_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tablo için tablo yapısı `fatura_urun`
 --
 
@@ -39,23 +53,6 @@ CREATE TABLE IF NOT EXISTS `fatura_urun` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fatura_id` int(10) UNSIGNED NOT NULL,
   `urun_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `kategoriler`
---
-
-DROP TABLE IF EXISTS `kategoriler`;
-CREATE TABLE IF NOT EXISTS `kategoriler` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ust_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `ad` varchar(64) NOT NULL,
-  `aciklama` varchar(128) NOT NULL,
-  `kayit_zamani` datetime NOT NULL,
-  `guncelleme_zamani` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -104,24 +101,8 @@ CREATE TABLE IF NOT EXISTS `urunler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ad` varchar(192) NOT NULL,
   `fiyat` decimal(19,4) NOT NULL,
-  `indirim` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `adet` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `kayit_zamani` datetime NOT NULL,
   `guncelleme_zamani` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `urun_kategori`
---
-
-DROP TABLE IF EXISTS `urun_kategori`;
-CREATE TABLE IF NOT EXISTS `urun_kategori` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `urun_id` int(10) UNSIGNED NOT NULL,
-  `kategori_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 

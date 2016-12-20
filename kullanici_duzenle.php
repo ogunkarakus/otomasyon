@@ -164,7 +164,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 <div class="panel-footer">
-<button class="btn btn-block btn-success">
+<button class="btn btn-block btn-primary">
 <i class="fa fa-fw fa-save"></i>
 <span>Güncelle</span>
 </button>
