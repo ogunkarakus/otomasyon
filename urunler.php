@@ -4,6 +4,8 @@ require str_replace('\\', '/', __DIR__).'/baslat.php';
 
 if (false === giris_yapilmis_mi()) {
     header('Location: giris.php', true, 303);
+
+    exit();
 }
 
 $stil = <<<STIL
@@ -34,11 +36,17 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </h1>
 </div>
 <div class="panel-body">
+<?php mesaj_bilgi(
+    'Ürüne ait özelliklere ulaşmak için <q><strong>Görüntüle'.
+    '</strong></q> butonuna tıklayın.'
+); ?>
 <div class="table-responsive">
 <table class="table table-bordered">
 <thead>
 <tr>
 <th class="small" style="cursor: help;" title="Kayıt Numarası">#</th>
+<th class="small">Ad</th>
+<th class="small">Fiyat</th>
 <th class="small">Kayıt Zamanı</th>
 <th class="small">Güncelleme Zamanı</th>
 <th class="small">İşlemler</th>
@@ -47,7 +55,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <tbody>
 <?php if (empty($urunler)): ?>
 <tr>
-<td colspan="5">
+<td colspan="6">
 <?php mesaj_uyari('Gösterilebilir ürün verisi bulunamadı.'); ?>
 </td>
 </tr>
@@ -55,6 +63,10 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <?php foreach ($urunler as $urun): ?>
 <tr>
 <td class="small"><?php print $urun['id']; ?></td>
+<td class="small"><?php print $urun['ad']; ?></td>
+<td class="small"><?php
+    print para($urun['fiyat']);
+?><i class="fa fa-fw fa-try"></i></td>
 <td class="small"><?php print $urun['kayit_zamani']; ?></td>
 <td class="small"><?php print $urun['guncelleme_zamani']; ?></td>
 <td class="small">
@@ -100,7 +112,6 @@ $(document).ready(function () {
     $('a[href*="urun_sil.php?id="').on('click', function (e) {
         if (!confirm('İşleme devam etmek istediğinize emin misiniz?')) {
             e.preventDefault();
-
             return false;
         }
     })

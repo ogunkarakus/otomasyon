@@ -47,7 +47,7 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 require str_replace('\\', '/', __DIR__).'/nav.php';
 
 ?>
-<form class="panel panel-primary form-horizontal" method="post">
+<form class="form-horizontal panel panel-primary" method="post">
 <div class="panel-heading">
 <h1 class="panel-title">
 <i class="fa fa-fw fa-user-plus"></i>

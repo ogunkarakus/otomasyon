@@ -4,6 +4,8 @@ require str_replace('\\', '/', __DIR__).'/baslat.php';
 
 if (false === giris_yapilmis_mi()) {
     header('Location: giris.php', true, 303);
+
+    exit();
 }
 
 $stil = <<<STIL
@@ -29,7 +31,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <div class="panel panel-primary">
 <div class="panel-heading">
 <h1 class="panel-title">
-<i class="fa fa-pie-chart"></i>
+<i class="fa fa-fw fa-pie-chart"></i>
 <span>İstatistikler</span>
 </h1>
 </div>

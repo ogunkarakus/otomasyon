@@ -4,6 +4,8 @@ require str_replace('\\', '/', __DIR__).'/baslat.php';
 
 if (giris_yapilmis_mi()) {
     header('Location: index.php', true, 303);
+
+    exit();
 }
 
 if (isset($_POST['e_p_a']) && isset($_POST['s_f_r'])) {
@@ -76,7 +78,7 @@ require str_replace('\\', '/', __DIR__).'/ust.php';
 </div>
 <div class="col-lg-12">
 <?php mesajlar(); ?>
-<form class="panel panel-primary form-horizontal" method="post">
+<form class="form-horizontal panel panel-primary" method="post">
 <div class="panel-heading">
 <h1 class="panel-title">
 <i class="fa fa-fw fa-sign-in"></i>

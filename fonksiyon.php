@@ -526,10 +526,23 @@ function sonuclar($stmt, $tek = false) {
     });
 }
 
+function urun($id) {
+    return vt(function ($vt) use ($id) {
+        $stmt = $vt->prepare(
+            'select `id`, `ad`, `fiyat`, `kayit_zamani`, `guncelleme_zam'.
+            'ani` from `urunler` where `id` = :id limit 1'
+        );
+
+        $stmt->bindParam('id', $id, PDO::PARAM_INT);
+
+        return sonuclar($stmt, true);
+    });
+}
+
 function urunler() {
     return vt(function ($vt) {
         $stmt = $vt->prepare(
-            'select `id`, `kayit_zamani`, `guncelleme_zam'.
+            'select `id`, `ad`, `fiyat`, `kayit_zamani`, `guncelleme_zam'.
             'ani` from `urunler`'
         );
 

@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- https://www.phpmyadmin.net
 --
 -- Ana Makine: 192.168.99.100:3306
 -- Üretim Zamanı: 19 Ara 2016, 03:52:50

@@ -4,6 +4,8 @@ require str_replace('\\', '/', __DIR__).'/baslat.php';
 
 if (false === giris_yapilmis_mi()) {
     header('Location: giris.php', true, 303);
+
+    exit();
 }
 
 $stil = <<<STIL
@@ -100,7 +102,6 @@ $(document).ready(function () {
     $('a[href*="fatura_sil.php?id="').on('click', function (e) {
         if (!confirm('İşleme devam etmek istediğinize emin misiniz?')) {
             e.preventDefault();
-
             return false;
         }
     })
