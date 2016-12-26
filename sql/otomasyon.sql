@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Ana Makine: 192.168.99.100:3306
--- Üretim Zamanı: 19 Ara 2016, 03:52:50
+-- Üretim Zamanı: 26 Ara 2016, 02:05:58
 -- Sunucu Sürümü: 5.7.16
 -- PHP Sürümü: 7.1.0
 
@@ -100,7 +100,10 @@ DROP TABLE IF EXISTS `urunler`;
 CREATE TABLE IF NOT EXISTS `urunler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ad` varchar(192) NOT NULL,
+  `birim` enum('adet','kilogram','litre') NOT NULL,
   `fiyat` decimal(19,4) NOT NULL,
+  `vergi` int(11) NOT NULL DEFAULT '8',
+  `ekleyen_kullanici_id` int(10) UNSIGNED NOT NULL,
   `kayit_zamani` datetime NOT NULL,
   `guncelleme_zamani` datetime NOT NULL,
   PRIMARY KEY (`id`)

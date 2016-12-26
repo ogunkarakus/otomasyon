@@ -7,8 +7,7 @@ function dolu_mu($girdi) {
 function faturalar() {
     return vt(function ($vt) {
         $stmt = $vt->prepare(
-            'select `id`, `kayit_zamani`, `guncelleme_zam'.
-            'ani` from `faturalar`'
+            'select * from `faturalar`'
         );
 
         return sonuclar($stmt);
@@ -26,7 +25,7 @@ function giris_yapmayi_dene($elektronik_posta_adresi, $sifre) {
         $stmt = $vt->prepare(
             'select * from `kullanicilar` where '.
             '`elektronik_posta_adresi` = :elektronik_posta_adresi and '.
-            '`sifre` = sha1(:sifre)'
+            '`sifre` = sha1(:sifre) limit 1'
         );
 
         $stmt->bindParam(
@@ -74,6 +73,12 @@ function icerik_saglayici($dosya_yolu) {
         'cdnjs.cloudflare.com',
         $dosya_yolu
     );
+}
+
+function ilk_harfi_buyuk_yap($dizge) {
+    $ilk_harf = mb_strtoupper(mb_substr($dizge, 0, 1));
+
+    return $ilk_harf.mb_substr($dizge, 1);
 }
 
 function istatistik_fatura() {
@@ -147,9 +152,7 @@ function kullanici($id, $zorla = false) {
 
     return vt(function ($vt) use ($id) {
         $stmt = $vt->prepare(
-            'select `id`, `ad`, `soyad`, `elektronik_pos'.
-            'ta_adresi`, `kayit_zamani`, `guncelleme_zam'.
-            'ani` from `kullanicilar` where `id` = :id'
+            'select * from `kullanicilar` where `id` = :id limit 1'
         );
 
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
@@ -161,9 +164,7 @@ function kullanici($id, $zorla = false) {
 function kullanicilar() {
     return vt(function ($vt) {
         $stmt = $vt->prepare(
-            'select `id`, `ad`, `soyad`, `elektronik_pos'.
-            'ta_adresi`, `kayit_zamani`, `guncelleme_zam'.
-            'ani` from `kullanicilar`'
+            'select * from `kullanicilar`'
         );
 
         return sonuclar($stmt);
@@ -484,6 +485,114 @@ function mi($adres) {
     return false !== strpos($_SERVER['PHP_SELF'], $adres);
 }
 
+function ozellik($ozellik_id) {
+    return vt(function ($vt) use ($ozellik_id) {
+        $stmt = $vt->prepare(
+            'select * from `ozellikler` where `id` = :id limit 1'
+        );
+
+        $stmt->bindParam('id', $ozellik_id, PDO::PARAM_INT);
+
+        return sonuclar($stmt, true);
+    });
+}
+
+function ozellik_guncelle($ozellik_id, $ozellik) {
+    return vt(function ($vt) use ($ozellik_id, $ozellik) {
+        $stmt = $vt->prepare(
+            'update `ozellikler` set `anahtar` = :anahtar, '.
+            '`deger` = :deger, `guncelleme_zamani` = now() where `id` = :id'
+        );
+
+        $stmt->bindParam('anahtar', $ozellik['anahtar'], PDO::PARAM_STR);
+        $stmt->bindParam('deger', $ozellik['deger'], PDO::PARAM_STR);
+        $stmt->bindParam('id', $ozellik_id, PDO::PARAM_INT);
+
+        if (false === $stmt->execute()) {
+            $_SESSION['mesajlar'][] = mesaj_hata(
+                'Sorgu çalıştırılması sırasında bir hata ile karşılaşıldı. '.
+                'İşlem iptal edildi.',
+                true
+            );
+
+            return false;
+        }
+
+        $_SESSION['mesajlar'][] = mesaj_basari(
+            'Özellik güncelleme işlemi başarıyla tamamlandı.',
+            true
+        );
+
+        return true;
+    });
+}
+
+function urun_ozellik_sil($urun_id, $ozellik_id) {
+    return vt(function ($vt) use($urun_id, $ozellik_id) {
+        $stmt = $vt->prepare(
+            'select count(`id`) as `adet` from `urunler` where `id` = :id'
+        );
+
+        $stmt->bindParam('id', $urun_id, PDO::PARAM_INT);
+
+        $sonuclar = sonuclar($stmt, true);
+
+        if ($sonuclar['adet'] <= 0) {
+            return '';
+        }
+
+        $stmt = $vt->prepare(
+            'select count(`id`) as `adet` from `ozellikler` where `id` = :id'
+        );
+
+        $stmt->bindParam('id', $ozellik_id, PDO::PARAM_INT);
+
+        $sonuclar = sonuclar($stmt, true);
+
+        if ($sonuclar['adet'] <= 0) {
+            return mesaj_hata(
+                'Özellik bulunamadı.',
+                true
+            );
+        }
+
+        $stmt = $vt->prepare(
+            'delete from `ozellikler` where `id` = :id limit 1'
+        );
+
+        $stmt->bindParam('id', $ozellik_id, PDO::PARAM_INT);
+
+        if (false === $stmt->execute()) {
+            return mesaj_hata(
+                'Sorgu çalıştırılması sırasında bir hata ile karşılaşıldı. '.
+                'İşlem iptal edildi.',
+                true
+            );
+        }
+
+        $stmt = $vt->prepare(
+            'delete from `urun_ozellik` where `urun_id` = :urun_id and '.
+            '`ozellik_id` = :ozellik_id limit 1'
+        );
+
+        $stmt->bindParam('urun_id', $urun_id, PDO::PARAM_INT);
+        $stmt->bindParam('ozellik_id', $ozellik_id, PDO::PARAM_INT);
+
+        if (false === $stmt->execute()) {
+            return mesaj_hata(
+                'Sorgu çalıştırılması sırasında bir hata ile karşılaşıldı. '.
+                'İşlem iptal edildi.',
+                true
+            );
+        }
+
+        return mesaj_basari(
+            'Özellik silme başarıyla tamamlandı.',
+            true
+        );
+    });
+}
+
 function para($sayi) {
     return number_format($sayi, 2, ',', '.');
 }
@@ -492,6 +601,10 @@ function saati_ayarla() {
     return vt(function ($vt) {
         $vt->query('set @@session.time_zone = \'+03:00\'');
     });
+}
+
+function secili_olsun_mu($deger, $girdi) {
+    print $deger === $girdi ? ' selected' : '';
 }
 
 function sonuc($stmt) {
@@ -529,8 +642,7 @@ function sonuclar($stmt, $tek = false) {
 function urun($id) {
     return vt(function ($vt) use ($id) {
         $stmt = $vt->prepare(
-            'select `id`, `ad`, `fiyat`, `kayit_zamani`, `guncelleme_zam'.
-            'ani` from `urunler` where `id` = :id limit 1'
+            'select * from `urunler` where `id` = :id limit 1'
         );
 
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
@@ -539,15 +651,167 @@ function urun($id) {
     });
 }
 
+function urun_olustur($urun) {
+    return vt(function ($vt) use ($urun) {
+        $mesajlar = [];
+
+        if (empty($urun['ad'])) {
+            $mesajlar[] = 'Ad boş geçilemez.';
+        }
+
+        if (empty($urun['birim'])) {
+            $mesajlar[] = 'Birim boş geçilemez.';
+        }
+
+        if (empty($urun['fiyat'])) {
+            $mesajlar[] = 'Fiyat boş geçilemez.';
+        }
+
+        if (empty($urun['vergi'])) {
+            $mesajlar[] = 'Vergi oranı boş geçilemez.';
+        }
+
+        if (count($mesajlar) > 0) {
+            foreach ($mesajlar as $mesaj) {
+                $_SESSION['mesajlar'][] = mesaj_uyari($mesaj, true);
+            }
+
+            return false;
+        }
+
+        $stmt = $vt->prepare(
+            'insert into `urunler` set `ad` = :ad, `birim` = :birim, '.
+            '`fiyat` = :fiyat, `vergi` = :vergi, '.
+            '`ekleyen_kullanici_id` = :ekleyen_kullanici_id, '.
+            '`kayit_zamani` = now(), `guncelleme_zamani` = now()'
+        );
+
+        $stmt->bindParam('ad', $urun['ad'], PDO::PARAM_STR);
+        $stmt->bindParam('birim', $urun['birim'], PDO::PARAM_STR);
+        $stmt->bindParam('fiyat', strval($urun['fiyat']), PDO::PARAM_STR);
+        $stmt->bindParam('vergi', $urun['vergi'], PDO::PARAM_INT);
+        $stmt->bindParam(
+            'ekleyen_kullanici_id',
+            $urun['ekleyen_kullanici_id'],
+            PDO::PARAM_INT
+        );
+
+        if (false === $stmt->execute()) {
+            $_SESSION['mesajlar'][] = mesaj_hata(
+                'Sorgu çalıştırılması sırasında bir hata ile karşılaşıldı. '.
+                'İşlem iptal edildi.',
+                true
+            );
+
+            return false;
+        }
+
+        $urun_id = $vt->lastInsertId();
+
+        $_SESSION['mesajlar'][] = mesaj_basari(
+            'Ürün oluşturma işlemi başarıyla tamamlandı.',
+            true
+        );
+
+        return $urun_id;
+    });
+}
+
+function urun_ozellikler($id) {
+    return vt(function ($vt) use ($id) {
+        $stmt = $vt->prepare(
+            'select `ozellikler`.`id`, `ozellikler`.`anahtar`, '.
+            '`ozellikler`.`deger` from '.
+            '`ozellikler`, `urun_ozellik`, `urunler` where '.
+            '`ozellikler`.`id` = `urun_ozellik`.`ozellik_id` and '.
+            '`urun_ozellik`.`urun_id` = `urunler`.`id` and '.
+            '`urunler`.`id` = :id'
+        );
+
+        $stmt->bindParam('id', $id, PDO::PARAM_INT);
+
+        return sonuclar($stmt);
+    });
+}
+
+function urune_ozellikleri_ekle($urun_id, $ozellikler) {
+    return vt(function ($vt) use ($urun_id, $ozellikler) {
+        $don = true;
+
+        foreach ($ozellikler as $ozellik) {
+            if (empty($ozellik['ad'])) {
+                continue;
+            }
+
+            $stmt = $vt->prepare(
+                'insert into `ozellikler` set `anahtar` = :ad, '.
+                '`deger` = :deger, `kayit_zamani` = now(), '.
+                '`guncelleme_zamani` = now()'
+            );
+
+            $stmt->bindParam('ad', $ozellik['ad'], PDO::PARAM_STR);
+            $stmt->bindParam('deger', $ozellik['deger'], PDO::PARAM_STR);
+
+            if (false === $stmt->execute()) {
+                $_SESSION['mesajlar'][] = mesaj_hata(
+                    'Sorgu çalıştırılması sırasında bir hata ile '.
+                    ' karşılaşıldı. İşlem iptal edildi.',
+                    true
+                );
+
+                $don = false;
+
+                break;
+            }
+
+            $ozellik_id = $vt->lastInsertId();
+
+            $stmt = $vt->prepare(
+                'insert into `urun_ozellik` set `urun_id` = :urun_id, '.
+                '`ozellik_id` = :ozellik_id'
+            );
+
+            $stmt->bindParam('urun_id', $urun_id, PDO::PARAM_INT);
+            $stmt->bindParam('ozellik_id', $ozellik_id, PDO::PARAM_INT);
+
+            if (false === $stmt->execute()) {
+                $_SESSION['mesajlar'][] = mesaj_hata(
+                    'Sorgu çalıştırılması sırasında bir hata ile '.
+                    ' karşılaşıldı. İşlem iptal edildi.',
+                    true
+                );
+
+                $don = false;
+
+                break;
+            }
+        }
+
+        if ($don) {
+            $_SESSION['mesajlar'][] = mesaj_basari(
+                'Ürüne özellik ekleme işlemi başarıyla tamamlandı.',
+                true
+            );
+        }
+
+        return $don;
+    });
+}
+
 function urunler() {
     return vt(function ($vt) {
         $stmt = $vt->prepare(
-            'select `id`, `ad`, `fiyat`, `kayit_zamani`, `guncelleme_zam'.
-            'ani` from `urunler`'
+            'select * from `urunler`'
         );
 
         return sonuclar($stmt);
     });
+}
+
+function vergi($miktar, $oran) {
+    $oran = $oran <= 0 ? 1 : $oran;
+
+    return $miktar + (($miktar / 100) * $oran);
 }
 
 function vt($gc = null) {

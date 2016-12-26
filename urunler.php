@@ -46,7 +46,9 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <tr>
 <th class="small" style="cursor: help;" title="Kayıt Numarası">#</th>
 <th class="small">Ad</th>
-<th class="small">Fiyat</th>
+<th class="small">Birim</th>
+<th class="small">Fiyat (Vergisiz)</th>
+<th class="small">Fiyat (Vergili)</th>
 <th class="small">Kayıt Zamanı</th>
 <th class="small">Güncelleme Zamanı</th>
 <th class="small">İşlemler</th>
@@ -55,7 +57,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <tbody>
 <?php if (empty($urunler)): ?>
 <tr>
-<td colspan="6">
+<td colspan="8">
 <?php mesaj_uyari('Gösterilebilir ürün verisi bulunamadı.'); ?>
 </td>
 </tr>
@@ -64,8 +66,12 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 <tr>
 <td class="small"><?php print $urun['id']; ?></td>
 <td class="small"><?php print $urun['ad']; ?></td>
+<td class="small"><?php print ilk_harfi_buyuk_yap($urun['birim']); ?></td>
 <td class="small"><?php
     print para($urun['fiyat']);
+?><i class="fa fa-fw fa-try"></i></td>
+<td class="small"><?php
+    print para(vergi($urun['fiyat'], $urun['vergi']));
 ?><i class="fa fa-fw fa-try"></i></td>
 <td class="small"><?php print $urun['kayit_zamani']; ?></td>
 <td class="small"><?php print $urun['guncelleme_zamani']; ?></td>

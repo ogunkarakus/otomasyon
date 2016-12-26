@@ -36,7 +36,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </h1>
 </div>
 <div class="panel-body">
-<div class="row">
+<div class="row"><!--
 <div class="col-lg-12 col-md-12">
 <div class="panel panel-primary">
 <div class="panel-heading">
@@ -86,8 +86,8 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </p>
 </div>
 </div>
-</div>
-<div class="col-lg-4 col-md-4">
+</div>-->
+<div class="col-lg-6 col-md-6">
 <div class="panel panel-primary">
 <div class="panel-heading">
 <h1 class="panel-title">
@@ -104,7 +104,7 @@ require str_replace('\\', '/', __DIR__).'/nav.php';
 </div>
 </div>
 </div>
-<div class="col-lg-4 col-md-4">
+<div class="col-lg-6 col-md-6">
 <div class="panel panel-primary">
 <div class="panel-heading">
 <h1 class="panel-title">

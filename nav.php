@@ -16,13 +16,14 @@
 </div>
 <div class="collapse navbar-collapse" id="navbar">
 <ul class="nav navbar-nav">
+<!--
 <?php $faturalar_mi = mi('fatura'); ?>
 <li<?php print $faturalar_mi ? ' class="active"' : ''; ?>>
 <a href="faturalar.php" title="Faturalar">
 <i class="fa fa-fw fa-files-o"></i>
 <span>Faturalar</span>
 </a>
-</li>
+</li>-->
 <?php $kullanicilar_mi = mi('kullanici'); ?>
 <li<?php print $kullanicilar_mi ? ' class="active"' : ''; ?>>
 <a href="kullanicilar.php" title="Kullanıcılar">
