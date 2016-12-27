@@ -8,7 +8,7 @@ if (false === giris_yapilmis_mi()) {
     exit();
 }
 
-if (false === is_numeric($_GET['id'])) {
+if (false === isset($_GET['id']) || false === is_numeric($_GET['id'])) {
     $adres = 'kullanicilar.php';
 
     $_SESSION['mesajlar'][] = mesaj_uyari(

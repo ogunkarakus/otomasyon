@@ -717,6 +717,65 @@ function urun_olustur($urun) {
     });
 }
 
+function urun_guncelle($urun_id, $urun) {
+    return vt(function ($vt) use ($urun_id, $urun) {
+        $mesajlar = [];
+
+        if (empty($urun['ad'])) {
+            $mesajlar[] = 'Ad boş geçilemez.';
+        }
+
+        if (empty($urun['birim'])) {
+            $mesajlar[] = 'Birim boş geçilemez.';
+        }
+
+        if (empty($urun['fiyat'])) {
+            $mesajlar[] = 'Fiyat boş geçilemez.';
+        }
+
+        if (empty($urun['vergi'])) {
+            $mesajlar[] = 'Vergi oranı boş geçilemez.';
+        }
+
+        if (count($mesajlar) > 0) {
+            foreach ($mesajlar as $mesaj) {
+                $_SESSION['mesajlar'][] = mesaj_uyari($mesaj, true);
+            }
+
+            return false;
+        }
+
+        $stmt = $vt->prepare(
+            'update `urunler` set `ad` = :ad, `birim` = :birim, '.
+            '`fiyat` = :fiyat, `vergi` = :vergi, '.
+            '`guncelleme_zamani` = now() where `id` = :id limit 1'
+        );
+
+        $stmt->bindParam('ad', $urun['ad'], PDO::PARAM_STR);
+        $stmt->bindParam('birim', $urun['birim'], PDO::PARAM_STR);
+        $stmt->bindParam('fiyat', strval($urun['fiyat']), PDO::PARAM_STR);
+        $stmt->bindParam('vergi', $urun['vergi'], PDO::PARAM_INT);
+        $stmt->bindParam('id', $urun_id, PDO::PARAM_INT);
+
+        if (false === $stmt->execute()) {
+            $_SESSION['mesajlar'][] = mesaj_hata(
+                'Sorgu çalıştırılması sırasında bir hata ile karşılaşıldı. '.
+                'İşlem iptal edildi.',
+                true
+            );
+
+            return false;
+        }
+
+        $_SESSION['mesajlar'][] = mesaj_basari(
+            'Ürün güncelleme işlemi başarıyla tamamlandı.',
+            true
+        );
+
+        return true;
+    });
+}
+
 function urun_ozellikler($id) {
     return vt(function ($vt) use ($id) {
         $stmt = $vt->prepare(
